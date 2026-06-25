@@ -17,13 +17,13 @@ install:
 
     - type: clone_git
       repo: https://github.com/osa-ora/hr-mcp-agent-demo
-      path: "{{WORKSPACE}}/hr-mcp-demo"
+      path: "{{WORKSPACE}}/hr-mcp-agent-demo"
 
     - type: venv
-      path: "{{WORKSPACE}}/hr-mcp-demo"
+      path: "{{WORKSPACE}}/hr-mcp-agent-demo"
 
     - type: install
-      path: "{{WORKSPACE}}/hr-mcp-demo"
+      path: "{{WORKSPACE}}/hr-mcp-agent-demo"
 
 
 run:
@@ -34,7 +34,7 @@ run:
         PORT: "{{port}}"
 
     - type: run
-      path: "{{WORKSPACE}}/hr-mcp-demo"
+      path: "{{WORKSPACE}}/hr-mcp-agent-demo"
       mode: terminal
       command: "./.venv/bin/python app.py"
 
