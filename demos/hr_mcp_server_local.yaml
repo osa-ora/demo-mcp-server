@@ -1,0 +1,44 @@
+name: HR MCP Server
+
+repo: https://github.com/osa-ora/hr-mcp-agent-demo
+port: 8000
+
+prerequisites:
+  - python3
+  - pip
+  - git
+
+
+install:
+  steps:
+
+    - type: check_python
+    - type: check_postgres
+
+    - type: clone_git
+      repo: https://github.com/osa-ora/hr-mcp-agent-demo
+      path: "{{WORKSPACE}}/hr-mcp-demo"
+
+    - type: venv
+      path: "{{WORKSPACE}}/hr-mcp-demo"
+
+    - type: install
+      path: "{{WORKSPACE}}/hr-mcp-demo"
+
+
+run:
+  steps:
+
+    - type: env
+      variables:
+        PORT: "{{port}}"
+
+    - type: run
+      path: "{{WORKSPACE}}/hr-mcp-demo"
+      mode: terminal
+      command: "./.venv/bin/python app.py"
+
+    - type: health
+      url: "http://localhost:{{port}}/health"
+      retries: 10
+      delay_seconds: 2
