@@ -15,6 +15,9 @@ install:
       command: whoami
       
     - type: oc_command
+      command: delete project hr-mcp
+      
+    - type: oc_command
       command: new-project hr-mcp
 
     - type: oc_command
