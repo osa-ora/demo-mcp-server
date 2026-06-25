@@ -5,4 +5,4 @@ demos:
 
   - name: HR MCP Server Demo
     description: This demo runs a local HR MCP Server.
-    file: hr_mncp_server_local.yaml
+    file: hr_mcp_server_local.yaml
