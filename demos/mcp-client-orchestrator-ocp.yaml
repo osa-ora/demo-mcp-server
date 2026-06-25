@@ -29,6 +29,9 @@ install:
     - type: oc_command
       command: expose svc/ocp-ai-mcp-client-demo -n hr-mcp
 
+    - type: shell_command
+      command: echo "CONFIG REQUIRED: please set LLM_BASE_URL and LLM_API_KEY in ConfigMap mcp-client-config (namespace hr-mcp) using: oc edit configmap mcp-client-config -n hr-mcp"
+
 health:
   steps:
 
