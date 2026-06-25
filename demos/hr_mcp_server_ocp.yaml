@@ -28,7 +28,7 @@ install:
       command: rollout status dc/postgresql -n hr-mcp --timeout=180s
 
     - type: oc_command
-      command: get pod -l app=postgresql -n hr-mcp -o jsonpath='{.items[0].metadata.name}'
+      command: get pod -l deploymentconfig=postgresql -n hr-mcp -o jsonpath='{.items[0].metadata.name}'
       register: POSTGRES_POD
    
     - type: oc_command
