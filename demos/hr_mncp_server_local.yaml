@@ -1,36 +1,37 @@
-name: HR MCP Server Demo
+name: MCP Server Client Orchestrator
 
-repo: https://github.com/osa-ora/hr-mcp-agent-demo
+repo: https://github.com/osa-ora/ocp-ai-mcp-client-demo
 
 prerequisites:
   - python3
   - pip
   - git
-  - postgres
 
-steps:
-  - type: check_python
 
-  - type: check_service
-    service: postgres
-    host: localhost
-    port: 5432
+install:
+  steps:
 
-  - type: clone_git
-    repo: https://github.com/osa-ora/hr-mcp-agent-demo
-    path: "{{WORKSPACE}}/hr-mcp-agent-demo"
+    - type: check_python
 
-  - type: venv
-    path: "{{WORKSPACE}}/hr-mcp-agent-demo"
+    - type: clone_git
+      repo: https://github.com/osa-ora/ocp-ai-mcp-client-demo
+      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
 
-  - type: install
-    path: "{{WORKSPACE}}/hr-mcp-agent-demo"
+    - type: venv
+      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
 
-  - type: run
-    path: "{{WORKSPACE}}/hr-mcp-agent-demo"
-    command: "python3 app.py"
+    - type: install
+      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
 
-  - type: health
-    url: http://localhost:8080/health
-    retries: 10
-    delay_seconds: 2
+
+run:
+  steps:
+
+    - type: run
+      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
+      command: "python3 app.py"
+
+    - type: health
+      url: http://localhost:8080/health
+      retries: 10
+      delay_seconds: 2
