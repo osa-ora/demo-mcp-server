@@ -1,0 +1,46 @@
+name: HR MCP Server Demo
+
+repo: https://github.com/osa-ora/hr-mcp-agent-demo
+
+prerequisites:
+  - python3
+  - pip
+  - git
+  - docker
+
+steps:
+  - type: check_python
+
+  - type: start_service
+    service: postgres
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    env:
+      POSTGRES_USER: hr_user
+      POSTGRES_PASSWORD: hr_pass
+      POSTGRES_DB: hr_db
+
+  - type: wait_for
+    service: postgres
+    timeout_seconds: 20
+    check: tcp://localhost:5432
+
+  - type: clone_git
+    repo: https://github.com/osa-ora/hr-mcp-agent-demo
+    path: "{{WORKSPACE}}/hr-mcp-agent-demo"
+
+  - type: venv
+    path: "{{WORKSPACE}}/hr-mcp-agent-demo"
+
+  - type: install
+    path: "{{WORKSPACE}}/hr-mcp-agent-demo"
+
+  - type: run
+    path: "{{WORKSPACE}}/hr-mcp-agent-demo"
+    command: "python3 app.py"
+
+  - type: health
+    url: http://localhost:8080/health
+    retries: 15
+    delay_seconds: 3
