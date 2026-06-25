@@ -66,6 +66,7 @@ health:
 
     - type: oc_command
       command: get route hr-mcp-server -n hr-mcp
+      register: MCP_ROUTE
 
-    - type: oc_command
-      command: curl -f http://hr-mcp-server.hr-mcp.svc.cluster.local:8080/mcp
+    - type: shell_command
+      command: curl -f http://{{MCP_ROUTE}}/mcp
