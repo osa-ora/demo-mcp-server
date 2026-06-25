@@ -38,7 +38,8 @@ run:
       mode: terminal
       command: "./.venv/bin/python app.py"
 
-    - type: health
-      url: "http://localhost:{{port}}/health"
+    - type: port_check
+      host: localhost
+      port: "{{port}}"
       retries: 10
       delay_seconds: 2
