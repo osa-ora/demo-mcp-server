@@ -5,7 +5,7 @@ demos:
 
   - name: OpenShift MCP Server Client Orchestrator
     description: This demo runs MCP client orchestrator on OpenShift.
-    file: mcp-client-orchestrator_ocp.yaml
+    file: mcp-client-orchestrator-ocp.yaml
 
   - name: Local HR MCP Server Demo
     description: This demo runs a local HR MCP Server.
