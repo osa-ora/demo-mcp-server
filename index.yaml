@@ -1,0 +1,3 @@
+demos:
+  - name: MCP Server Client Orchestrator
+    file: mcp-client-orchestrator.yaml
