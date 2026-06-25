@@ -76,7 +76,7 @@ health:
       register: MCP_ROUTE
 
     - type: port_check
-      host: http://{{MCP_ROUTE}}/mcp
+      host: "{{MCP_ROUTE}}"
       port: "{{port}}"
       retries: 10
       delay_seconds: 2
