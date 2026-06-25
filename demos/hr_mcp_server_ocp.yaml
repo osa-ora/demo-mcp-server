@@ -1,7 +1,7 @@
 name: HR MCP Server Demo on OCP
 
 repo: https://github.com/osa-ora/hr-mcp-agent-demo
-port: 8080
+port: 80
 
 prerequisites:
   - oc command
@@ -77,7 +77,7 @@ health:
 
     - type: port_check
       host: http://{{MCP_ROUTE}}/mcp
-      port: 80
+      port: {{PORT}}
       retries: 10
       delay_seconds: 2
   
