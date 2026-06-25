@@ -29,7 +29,7 @@ run:
 
     - type: run
       path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
-      command: "python3 app.py"
+      command: "source .venv/bin/activate && python3 app.py"
 
     - type: health
       url: http://localhost:8080/health
