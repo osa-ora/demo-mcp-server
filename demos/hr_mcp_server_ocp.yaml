@@ -16,6 +16,7 @@ install:
       
     - type: oc_command
       command: delete project hr-mcp
+      ignore_error: true
       
     - type: oc_command
       command: new-project hr-mcp
