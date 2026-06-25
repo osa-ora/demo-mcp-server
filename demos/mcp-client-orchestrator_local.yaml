@@ -7,24 +7,31 @@ prerequisites:
   - pip
   - git
 
-steps:
-  - type: check_python
+install:
+  steps:
 
-  - type: clone_git
-    repo: https://github.com/osa-ora/ocp-ai-mcp-client-demo
-    path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
+    - type: check_python
 
-  - type: venv
-    path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
+    - type: clone_git
+      repo: https://github.com/osa-ora/ocp-ai-mcp-client-demo
+      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
 
-  - type: install
-    path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
+    - type: venv
+      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
 
-  - type: run
-    path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
-    command: "python3 app.py"
+    - type: install
+      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
 
-  - type: health
-    url: http://localhost:8080/health
-    retries: 10
-    delay_seconds: 2
+
+run:
+  steps:
+
+    - type: run
+      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
+      mode: terminal
+      command: "source .venv/bin/activate && python3 app.py"
+
+    - type: health
+      url: http://localhost:8080/health
+      retries: 10
+      delay_seconds: 2
