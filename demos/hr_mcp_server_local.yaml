@@ -1,4 +1,4 @@
-name: HR MCP Server
+name: HR MCP Server Demo
 
 repo: https://github.com/osa-ora/hr-mcp-agent-demo
 port: 8000
