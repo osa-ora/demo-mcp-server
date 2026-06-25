@@ -1,3 +1,8 @@
 demos:
   - name: MCP Server Client Orchestrator
-    file: mcp-client-orchestrator.yaml
+    description: This demo runs a local MCP client orchestrator.
+    file: mcp-client-orchestrator_local.yaml
+
+  - name: HR MCP Server Demo
+    description: This demo runs a local HR MCP Server.
+    file: hr_mncp_server_local.yaml
