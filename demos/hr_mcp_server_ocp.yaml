@@ -75,5 +75,9 @@ health:
       command: get route hr-mcp-server -n hr-mcp -o jsonpath='{.spec.host}'
       register: MCP_ROUTE
 
-    - type: shell_command
-      command: curl -f http://{{MCP_ROUTE}}/mcp
+    - type: port_check
+      host: http://{{MCP_ROUTE}}/mcp
+      port: 80
+      retries: 10
+      delay_seconds: 2
+  
