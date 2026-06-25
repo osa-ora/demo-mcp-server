@@ -21,7 +21,7 @@ install:
       command: new-app postgresql-persistent --param=POSTGRESQL_USER=postgres --param=POSTGRESQL_PASSWORD=postgres --param=POSTGRESQL_DATABASE=hrdb --name=postgresql -n hr-mcp
 
     - type: oc_command
-      command: wait --for=condition=ready pod -l deployment=postgresql -n hr-mcp --timeout=180s
+      command: rollout status dc/postgresql -n hr-mcp --timeout=180s
 
     - type: oc_command
       command: get pod -l app=postgresql -n hr-mcp -o jsonpath='{.items[0].metadata.name}'
