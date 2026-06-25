@@ -1,7 +1,7 @@
 name: Weather MCP Server Demo
 
 repo: https://github.com/osa-ora/hr-mcp-agent-demo
-port: 8000
+port: 8060
 
 prerequisites:
   - python3
