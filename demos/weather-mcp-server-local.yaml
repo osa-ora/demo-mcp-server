@@ -36,7 +36,7 @@ run:
     - type: run
       path: "{{WORKSPACE}}/weather-mcp-server-demo"
       mode: terminal
-      command: "./.venv/bin/python weather-mcp-server.py"
+      command: "./.venv/bin/python weather-mcp.py"
 
     - type: port_check
       host: localhost
