@@ -15,6 +15,16 @@ install:
     - type: check_python
     - type: check_postgres
 
+    - type: shell_command
+      command: 'psql postgres -c "CREATE DATABASE hrdb;"'
+      ignore_error: true
+    
+    - type: shell_command
+      command: 'psql hrdb -f "{{WORKSPACE}}/hr-mcp-agent-demo/db_scripts/schema.sql"'
+    
+    - type: shell_command
+      command: 'psql hrdb -f "{{WORKSPACE}}/hr-mcp-agent-demo/db_scripts/load_sample_data.sql"'
+
     - type: clone_git
       repo: https://github.com/osa-ora/hr-mcp-agent-demo
       path: "{{WORKSPACE}}/hr-mcp-agent-demo"
