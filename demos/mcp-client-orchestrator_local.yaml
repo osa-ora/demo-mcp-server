@@ -8,6 +8,7 @@ prerequisites:
   - python3
   - pip
   - git
+  - ollama or MaaS api key and url
 
 
 install:
