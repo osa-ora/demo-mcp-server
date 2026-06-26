@@ -37,7 +37,9 @@ def resolve_demo_file(demo_name: str):
     index = fetch_index()
 
     for demo in index.get("demos", []):
-        if demo["name"] == demo_name:
+        #print("compare: [" + repr(demo.get("name")) + "] vs [" + repr(demo_name) + "]")
+        if demo.get("name", "").casefold().strip() == key.casefold().strip():
+            print(f"Got demo file: {demo['file']}")
             return demo["file"]
 
     raise Exception(f"Demo not found: {demo_name}")
@@ -66,9 +68,19 @@ def resolve_demo_key(key):
         key_int = None
 
     for demo in index.get("demos", []):
-        if demo.get("id") == key_int:
+        demo_id = demo.get("id")
+        demo_name = str(demo.get("name", "")).strip()
+        key_name = str(key).strip()
+    
+        #print(f"Comparing ID: {demo_id} vs {key_int}")
+        #print(f"Comparing Name: [{repr(demo_name)}] vs [{repr(key_name)}]")
+    
+        if demo_id == key_int:
+            print(f"Matched by ID: {demo['file']}")
             return demo["file"]
-        if demo.get("name") == key:
+    
+        if demo_name == key_name:
+            print(f"Matched by Name: {demo['file']}")
             return demo["file"]
 
     raise Exception(f"Demo not found: {key}")
