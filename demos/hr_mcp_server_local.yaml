@@ -20,10 +20,10 @@ install:
       ignore_error: true
     
     - type: shell_command
-      command: 'psql hrdb -f "{{WORKSPACE}}/hr-mcp-agent-demo/db_scripts/schema.sql"'
-    
+      command: 'curl -s https://raw.githubusercontent.com/osa-ora/ocp-ai-custom-mcp-demo/main/db_scripts/schema.sql | psql hrdb'
+
     - type: shell_command
-      command: 'psql hrdb -f "{{WORKSPACE}}/hr-mcp-agent-demo/db_scripts/load_sample_data.sql"'
+      command: 'curl -s https://raw.githubusercontent.com/osa-ora/ocp-ai-custom-mcp-demo/main/db_scripts/load_sample_data.sql | psql hrdb'
 
     - type: clone_git
       repo: https://github.com/osa-ora/hr-mcp-agent-demo
