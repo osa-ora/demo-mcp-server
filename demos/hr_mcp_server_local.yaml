@@ -7,7 +7,7 @@ prerequisites:
   - python3
   - pip
   - git
-
+  - postgres is available in PATH (psql)
 
 install:
   steps:
