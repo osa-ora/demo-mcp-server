@@ -9,6 +9,11 @@ The MCP Server expose the following functions:
 - run_demo
 - health_check_demo
 
+
+<img width="2816" height="1536" alt="component_diagram" src="https://github.com/user-attachments/assets/6c40dcbb-6b91-49c4-b7bf-16117251a772" />
+
+
+
 The list of Demos are stored in the index.yaml file which in turn reference the demo detailed file inside the /demos folder.
 
 ---
