@@ -23,3 +23,8 @@ demos:
     name: Local Weather MCP Server Demo
     description: This demo runs a local Weather MCP Server.
     file: weather-mcp-server-local.yaml
+    
+  - id: 6
+    name: Local OGX RAG Demo
+    description: This demo runs a local OGX RAG Demo.
+    file: ogx-demo-local.yaml
