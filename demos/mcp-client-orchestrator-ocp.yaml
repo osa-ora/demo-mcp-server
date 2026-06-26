@@ -6,6 +6,7 @@ port: 80
 prerequisites:
   - oc command
   - oc login
+  - MaaS url and api key
 
 install:
   steps:
