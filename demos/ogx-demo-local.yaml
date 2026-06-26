@@ -7,6 +7,7 @@ prerequisites:
   - python3
   - uv
   - ollama
+  - jupyter lab installed
 
 install:
   steps:
@@ -49,4 +50,4 @@ run:
     - type: run
       path: "{{WORKSPACE}}/ogx-local-demo"
       mode: terminal
-      command: "./.venv/bin/python rag-ogx-openai.py"
+      command: "jupyter lab"
