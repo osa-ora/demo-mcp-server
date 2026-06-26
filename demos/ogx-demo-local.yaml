@@ -40,9 +40,13 @@ install:
 run:
   steps:
 
-    - type: shell_command
-      command: 'OLLAMA_URL=http://localhost:11434/v1 uv run ogx run starter'
-
-    - type: shell_command
+    - type: run
       path: "{{WORKSPACE}}/ogx-local-demo"
-      command: 'python3 rag-ogx-openai.py'
+      mode: terminal
+      command: "OLLAMA_URL=http://localhost:11434/v1 uv run ogx run starter"
+
+    # RAG test application
+    - type: run
+      path: "{{WORKSPACE}}/ogx-local-demo"
+      mode: terminal
+      command: "./.venv/bin/python rag-ogx-openai.py"
