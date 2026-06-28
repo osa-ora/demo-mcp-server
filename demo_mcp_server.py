@@ -50,7 +50,7 @@ ROLE: ANY USER
 Get full demo definition and description using its name or ID.
 """
 )
-def get_demo(key: str):
+def get_demo_details(key: str):
     debug(f"Invoke get_demo {key}.")
     return helper.fetch_demo(key)
 
