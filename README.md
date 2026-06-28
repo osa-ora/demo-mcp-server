@@ -3,7 +3,7 @@ This MCP Server is dedicated to build my custom demos, either locally or on Open
 
 The MCP Server expose the following functions:
 - list_demos
-- get_demo
+- get_demo_details
 - get_demo_prerequisites
 - install_demo
 - run_demo
