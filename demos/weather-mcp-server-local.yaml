@@ -17,13 +17,13 @@ install:
 
     - type: clone_git
       repo: https://github.com/osa-ora/hr-mcp-agent-demo
-      path: "{{WORKSPACE}}/weather-mcp-server-demo"
+      path: "{{workspace}}/weather-mcp-server-demo"
 
     - type: venv
-      path: "{{WORKSPACE}}/weather-mcp-server-demo"
+      path: "{{workspace}}/weather-mcp-server-demo"
 
     - type: install
-      path: "{{WORKSPACE}}/weather-mcp-server-demo"
+      path: "{{workspace}}/weather-mcp-server-demo"
 
 
 run:
@@ -34,7 +34,7 @@ run:
         PORT: "{{port}}"
 
     - type: run
-      path: "{{WORKSPACE}}/weather-mcp-server-demo"
+      path: "{{workspace}}/weather-mcp-server-demo"
       mode: terminal
       command: "./.venv/bin/python weather-mcp.py"
 
