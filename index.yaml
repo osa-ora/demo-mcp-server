@@ -1,30 +1,47 @@
 demos:
   - id: 1
-    name: Local MCP Server Client Orchestrator
-    description: This demo runs a local MCP client orchestrator.
-    file: mcp-client-orchestrator_local.yaml
+    name: MCP Server Client Orchestrator
+    description: Local or OpenShift MCP client orchestrator demonstrating multi-server routing.
+    keywords:
+      - mcp
+      - client
+      - orchestrator
+
+    environments:
+      local:
+        file: mcp-client-orchestrator_local.yaml
+
+      openshift:
+        file: mcp-client-orchestrator_ocp.yaml
 
   - id: 2
-    name: OpenShift MCP Server Client Orchestrator
-    description: This demo runs MCP client orchestrator on OpenShift.
-    file: mcp-client-orchestrator-ocp.yaml
+    name: HR MCP Server Demo
+    description: This demo runs a Local or OpenShift HR MCP Server.
+    keywords:
+      - HR
+    environments:
+      local:
+        file: hr_mcp_server_local.yaml
+
+      openshift:
+        file: hr_mcp_server_ocp.yaml
 
   - id: 3
-    name: Local HR MCP Server Demo
-    description: This demo runs a local HR MCP Server.
-    file: hr_mcp_server_local.yaml
-
-  - id: 4
-    name: OpenShift HR MCP Server Demo
-    description: This demo runs HR MCP Server on OpenShift.
-    file: hr_mcp_server_ocp.yaml
-
-  - id: 5
-    name: Local Weather MCP Server Demo
-    description: This demo runs a local Weather MCP Server.
-    file: weather-mcp-server-local.yaml
+    name: Weather MCP Server Demo
+    description: This demo runs a Weather MCP Server.
+    keywords:
+      - Weather
+    environments:
+      local:
+        file: weather-mcp-server-local.yaml
     
-  - id: 6
-    name: Local OGX RAG Demo
-    description: This demo runs a local OGX RAG Demo.
-    file: ogx-demo-local.yaml
+  - id: 4
+    name: OGX RAG Demo
+    description: This demo runs an OGX RAG Demo.
+    keywords:
+      - OGX
+      - RAG
+    environments:
+      local:
+        file: ogx-demo-local.yaml
+
