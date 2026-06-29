@@ -34,9 +34,31 @@ def list_demos():
     return helper.fetch_index()
 
 
+# =========================================================
+# DEMO SEARCH
+# SKILL: demo_registry
+# =========================================================
+@mcp.tool(
+    annotations={"skill": "demo_registry"},
+    description="""
+ROLE: ANY USER
+
+Search demos by keyword.
+
+The search checks the demo keywords, name and description,
+and returns all matching demos together with their available
+deployment environments.
+"""
+)
+def find_demo(keyword: str):
+    debug(f"Invoke find_demo {keyword}.")
+    return helper.find_demo(keyword)
+
+
 @mcp.tool()
 def ping():
     return "ok"
+
 
 # =========================================================
 # DEMO DETAILS
@@ -47,12 +69,16 @@ def ping():
     description="""
 ROLE: ANY USER
 
-Get full demo definition and description using its name or ID.
+Get the full demo definition using its name or ID.
+
+Optionally specify the deployment environment.
+Defaults to "local".
 """
 )
-def get_demo_details(key: str):
-    debug(f"Invoke get_demo {key}.")
-    return helper.fetch_demo(key)
+def get_demo_details(key: str, environment: str = "local"):
+    debug(f"Invoke get_demo_details {key} ({environment}).")
+    return helper.fetch_demo_file(key, environment)
+
 
 # =========================================================
 # DEMO PREREQUISITES
@@ -63,25 +89,32 @@ def get_demo_details(key: str):
     description="""
 ROLE: ANY USER
 
-List the prerequisites required to install and run a specific demo using its name or ID.
+List the prerequisites required to install and run a demo.
+
+The demo can be identified by name or ID.
+
+Optionally specify the deployment environment.
+Defaults to "local".
 """
 )
-def get_demo_prerequisites(key: str):
-    debug(f"Invoke get_demo_prerequisites {key}.")
-    demo_def = helper.fetch_demo(key)
-    
+def get_demo_prerequisites(key: str, environment: str = "local"):
+    debug(f"Invoke get_demo_prerequisites {key} ({environment}).")
+
+    demo_def = helper.fetch_demo_file(key, environment)
+
     prereqs = demo_def.get("prerequisites", [])
-    
+
     return {
         "demo": demo_def.get("name", key),
+        "environment": environment,
         "prerequisites": prereqs if prereqs else ["No prerequisites specified."]
     }
+
 
 # =========================================================
 # DEMO INSTALLATION
 # SKILL: demo_registry
 # =========================================================
-
 @mcp.tool(
     annotations={"skill": "demo_registry"},
     description="""
@@ -95,20 +128,32 @@ This will:
 - create virtual environment
 - install dependencies
 
-It takes the demo name or ID and the workspace location where the demo will be installed.
+The demo can be identified by name or ID.
+
+Optionally specify the deployment environment.
+Defaults to "local".
 """
 )
-def install_demo(key: str, workspace: Optional[str] = None):
+def install_demo(
+    key: str,
+    workspace: Optional[str] = None,
+    environment: str = "local"
+):
     workspace = workspace or DEFAULT_WORKSPACE
-    debug(f"Invoke install_demo {key} in {workspace}.")
-    return helper.install_demo(key, workspace)
+
+    debug(f"Invoke install_demo {key} ({environment}) in {workspace}.")
+
+    return helper.install_demo(
+        key=key,
+        workspace=workspace,
+        environment=environment
+    )
 
 
 # =========================================================
 # DEMO RUN
 # SKILL: demo_registry
 # =========================================================
-
 @mcp.tool(
     annotations={"skill": "demo_registry"},
     description="""
@@ -120,19 +165,32 @@ This will:
 - start the demo application
 - validate health endpoint
 
-It takes the demo name or ID and the workspace location where the demo was installed.
+The demo can be identified by name or ID.
+
+Optionally specify the deployment environment.
+Defaults to "local".
 """
 )
-def run_demo(key: str, workspace: Optional[str] = None):
+def run_demo(
+    key: str,
+    workspace: Optional[str] = None,
+    environment: str = "local"
+):
     workspace = workspace or DEFAULT_WORKSPACE
-    debug(f"Invoke run_demo {key} in {workspace}.")
-    return helper.run_demo(key, workspace)
+
+    debug(f"Invoke run_demo {key} ({environment}) in {workspace}.")
+
+    return helper.run_demo(
+        key=key,
+        workspace=workspace,
+        environment=environment
+    )
+
 
 # =========================================================
 # DEMO HEALTH CHECK
 # SKILL: demo_registry
 # =========================================================
-
 @mcp.tool(
     annotations={"skill": "demo_registry"},
     description="""
@@ -141,13 +199,29 @@ ROLE: ANY USER
 Run only the health check phase of a demo.
 
 This validates that the deployed demo is reachable and healthy.
+
+The demo can be identified by name or ID.
+
+Optionally specify the deployment environment.
+Defaults to "local".
 """
 )
-def health_check_demo(key: str, workspace: Optional[str] = None):
+def health_check_demo(
+    key: str,
+    workspace: Optional[str] = None,
+    environment: str = "local"
+):
     workspace = workspace or DEFAULT_WORKSPACE
-    debug(f"Invoke health_check_demo {key} in {workspace}.")
-    return helper.health_check_demo(key, workspace)
-    
+
+    debug(f"Invoke health_check_demo {key} ({environment}) in {workspace}.")
+
+    return helper.health_check_demo(
+        key=key,
+        workspace=workspace,
+        environment=environment
+    )
+
+
 # =========================================================
 # MAIN ENTRY
 # =========================================================

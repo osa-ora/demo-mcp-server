@@ -24,7 +24,7 @@ def add_log(log, message):
 
 def fetch_index():
     url = f"{BASE_RAW_URL}/index.yaml"
-    add_log([], f"Fetching index: {url}")
+    print(f"[DEMO] Fetching index: {url}")
 
     r = requests.get(url, timeout=10)
     if r.status_code != 200:
@@ -32,59 +32,184 @@ def fetch_index():
 
     return yaml.safe_load(r.text)
 
-
-def resolve_demo_file(demo_name: str):
+# =========================================================
+# DEMO SEARCH
+# =========================================================
+def find_demo(keyword: str):
     index = fetch_index()
 
+    keyword_l = keyword.strip().lower()
+    results = []
+
     for demo in index.get("demos", []):
-        #print("compare: [" + repr(demo.get("name")) + "] vs [" + repr(demo_name) + "]")
-        if demo.get("name", "").casefold().strip() == key.casefold().strip():
-            print(f"Got demo file: {demo['file']}")
-            return demo["file"]
+        name = demo.get("name", "")
+        desc = demo.get("description", "")
+        keywords = demo.get("keywords", [])
 
-    raise Exception(f"Demo not found: {demo_name}")
+        score = 0
+
+        # name match
+        if keyword_l in str(name).lower():
+            score += 5
+
+        # description match
+        if keyword_l in str(desc).lower():
+            score += 3
+
+        # keyword match
+        for k in keywords:
+            if keyword_l == str(k).lower():
+                score += 10
+            elif keyword_l in str(k).lower():
+                score += 6
+
+        if score > 0:
+            results.append({
+                "id": demo.get("id"),
+                "name": demo.get("name"),
+                "description": demo.get("description"),
+                "keywords": demo.get("keywords", []),
+                "environments": list(demo.get("environments", {}).keys()),
+                "score": score
+            })
+
+    return sorted(results, key=lambda x: x["score"], reverse=True)
 
 
-def fetch_demo(key: str):
-    file_name = resolve_demo_key(key)
+
+# =========================================================
+# RESOLVE DEMO
+# =========================================================
+def resolve_demo(key: str, environment: str = "local"):
+    index = fetch_index()
+
+    key_str = str(key).strip()
+
+    try:
+        key_int = int(key_str)
+    except:
+        key_int = None
+
+    key_l = key_str.lower()
+
+    for demo in index.get("demos", []):
+        
+        # Check environment ...
+        if environment not in demo.get("environments", {}):
+            continue
+            
+        demo_id = demo.get("id")
+        demo_name = str(demo.get("name", "")).strip()
+        demo_name_l = demo_name.lower()
+        demo_keywords = demo.get("keywords", [])
+
+        # match by ID
+        if key_int is not None and demo_id == key_int:
+            return demo
+
+        # match by name
+        if demo_name_l == key_l:
+            return demo
+
+        # match by keyword
+        for k in demo_keywords:
+            if key_l == str(k).lower().strip():
+                return demo
+
+    raise Exception(f"Demo not found: {key} for environment {environment}")
+
+
+# =========================================================
+# FETCH DEMO 
+# =========================================================
+def fetch_demo_file(key: str, environment: str = "local"):
+    demo = resolve_demo(key, environment)
+
+    envs = demo.get("environments", {})
+
+    if environment not in envs:
+        raise Exception(
+            f"Environment '{environment}' not available for demo '{demo.get('name')}'. "
+            f"Available: {list(envs.keys())}"
+        )
+
+    file_name = envs[environment]["file"]
     url = f"{BASE_RAW_URL}/demos/{file_name}"
 
-    print(f"[DEMO] Loading demo definition {url}")
+    print(f"[DEMO] Loading demo definition: {url}")
 
     r = requests.get(url, timeout=10)
     if r.status_code != 200:
         raise Exception(f"Failed to fetch demo file {file_name}")
 
-    print(r.text)
     return yaml.safe_load(r.text)
-
-def resolve_demo_key(key):
-    index = fetch_index()
-
-    # convert "3" → 3 if possible
-    try:
-        key_int = int(key)
-    except:
-        key_int = None
-
-    for demo in index.get("demos", []):
-        demo_id = demo.get("id")
-        demo_name = str(demo.get("name", "")).strip()
-        key_name = str(key).strip()
     
-        #print(f"Comparing ID: {demo_id} vs {key_int}")
-        #print(f"Comparing Name: [{repr(demo_name)}] vs [{repr(key_name)}]")
-    
-        if demo_id == key_int:
-            print(f"Matched by ID: {demo['file']}")
-            return demo["file"]
-    
-        if demo_name == key_name:
-            print(f"Matched by Name: {demo['file']}")
-            return demo["file"]
+# =========================================================
+# INSTALL DEMO
+# =========================================================
+def install_demo(key: str, workspace: str, environment: str = "local"):
+    workspace = os.path.abspath(os.path.expanduser(workspace))
+    demo = fetch_demo_file(key, environment)
 
-    raise Exception(f"Demo not found: {key}")
-    
+    ctx = {
+        "workspace": workspace,
+        "repo_dir": None,
+        "log": [],
+        "env": {},
+        "port": demo.get("port", 8080)
+    }
+
+    os.makedirs(workspace, exist_ok=True)
+
+    for step in demo.get("install", {}).get("steps", []):
+        execute_step(ctx, step)
+
+    return {"status": "success", "log": ctx["log"]}
+
+# =========================================================
+# RUN DEMO
+# =========================================================
+def run_demo(key: str, workspace: str, environment: str = "local"):
+    workspace = os.path.abspath(os.path.expanduser(workspace))
+    demo = fetch_demo_file(key, environment)
+
+    ctx = {
+        "workspace": workspace,
+        "repo_dir": None,
+        "log": [],
+        "env": os.environ.copy(),
+        "port": demo.get("port", 8080),
+    }
+
+    for step in demo.get("run", {}).get("steps", []):
+        execute_step(ctx, step)
+
+    return {"status": "success", "log": ctx["log"]}
+
+# =========================================================
+# DEMO HEALTH CHECK DEMO
+# =========================================================
+def health_check_demo(key: str, workspace: str, environment: str = "local"):
+    demo = fetch_demo_file(key, environment)
+
+    ctx = {
+        "workspace": workspace,
+        "repo_dir": None,
+        "log": [],
+        "env": os.environ.copy(),
+        "port": demo.get("port", 8080),
+    }
+
+    for step in demo.get("health", {}).get("steps", []):
+        execute_step(ctx, step)
+
+    return {
+        "status": "success",
+        "phase": "health",
+        "demo": demo.get("name"),
+        "environment": environment,
+        "log": ctx["log"]
+    }
 # =========================================================
 # STEP INFRASTRUCTURE
 # =========================================================
@@ -154,7 +279,7 @@ def step_clone_git(ctx, step):
     if not repo_dir:
         raise Exception("Missing 'path' in clone_git step")
 
-    repo_dir = repo_dir.replace("{{WORKSPACE}}", ctx["workspace"])
+    repo_dir = repo_dir.replace("{{workspace}}", ctx["workspace"])
 
     ctx["repo_dir"] = repo_dir
 
@@ -199,7 +324,7 @@ def step_install(ctx, step):
 # =========================================================
 
 def prepare_run(ctx, step):
-    repo_dir = step["path"].replace("{{WORKSPACE}}", ctx["workspace"])
+    repo_dir = step["path"].replace("{{workspace}}", ctx["workspace"])
     command = step["command"].replace("{{port}}", str(ctx["port"]))
     mode = step.get("mode", "background")
 
@@ -377,7 +502,7 @@ def step_shell_command(ctx, step):
     # Match criteria met: Safely routing command string transformation
     command = resolve_value(step["command"], ctx)
 
-    cwd = step.get("path") or ctx.get("WORKSPACE")
+    cwd = step.get("path") or ctx.get("workspace")
 
     add_log(ctx["log"], f"SHELL CMD: {command} (cwd={cwd})")
 
@@ -419,71 +544,3 @@ STEP_HANDLERS = {
     "oc_command": step_oc_command,
     "shell_command": step_shell_command
 }
-
-
-# =========================================================
-# INSTALL DEMO
-# =========================================================
-
-def install_demo(name: str, workspace: str):
-    workspace = os.path.abspath(os.path.expanduser(workspace))
-    demo = fetch_demo(name)
-
-    ctx = {
-        "workspace": workspace,
-        "repo_dir": None,
-        "log": []
-    }
-
-    os.makedirs(workspace, exist_ok=True)
-
-    for step in demo.get("install", {}).get("steps", []):
-        execute_step(ctx, step)
-
-    return {"status": "success", "log": ctx["log"]}
-
-
-# =========================================================
-# RUN DEMO
-# =========================================================
-
-def run_demo(name: str, workspace: str):
-    workspace = os.path.abspath(os.path.expanduser(workspace))
-    demo = fetch_demo(name)
-
-    ctx = {
-        "workspace": workspace,
-        "repo_dir": None,
-        "log": [],
-        "env": os.environ.copy(),
-        "port": demo.get("port", 8081),
-    }
-
-    for step in demo.get("run", {}).get("steps", []):
-        execute_step(ctx, step)
-
-    return {"status": "success", "log": ctx["log"]}
-
-# =========================================================
-# HEALTH CHECK DEMO
-# =========================================================
-def health_check_demo(name: str, workspace: str):
-    demo = fetch_demo(name)
-
-    ctx = {
-        "workspace": workspace,
-        "repo_dir": None,
-        "log": [],
-        "env": os.environ.copy(),
-        "port": demo.get("port", 8081),
-    }
-
-    for step in demo.get("health", {}).get("steps", []):
-        execute_step(ctx, step)
-
-    return {
-        "status": "success",
-        "phase": "health",
-        "demo": name,
-        "log": ctx["log"]
-    }
