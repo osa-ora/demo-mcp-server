@@ -18,13 +18,13 @@ install:
 
     - type: clone_git
       repo: https://github.com/osa-ora/ocp-ai-mcp-client-demo
-      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
+      path: "{{workspace}}/ocp-ai-mcp-client-demo"
 
     - type: venv
-      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
+      path: "{{workspace}}/ocp-ai-mcp-client-demo"
 
     - type: install
-      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
+      path: "{{workspace}}/ocp-ai-mcp-client-demo"
 
 
 run:
@@ -35,7 +35,7 @@ run:
         PORT: "{{port}}"
 
     - type: run
-      path: "{{WORKSPACE}}/ocp-ai-mcp-client-demo"
+      path: "{{workspace}}/ocp-ai-mcp-client-demo"
       mode: terminal
       command: "./.venv/bin/python app.py"
 
