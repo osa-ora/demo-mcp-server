@@ -3,6 +3,7 @@ This MCP Server is dedicated to build my custom demos, either locally or on Open
 
 The MCP Server expose the following functions:
 - list_demos
+- find_demo
 - get_demo_details
 - get_demo_prerequisites
 - install_demo
@@ -62,33 +63,30 @@ python demo_mcp_server.py
 Configure the Ollama with a local model such as 'llama3.1:latest'
 Configure the Demo MCP server as the following screen shot:
 
-<img width="769" height="672" alt="Screenshot 2026-06-26 at 1 59 40 PM" src="https://github.com/user-attachments/assets/f4dd0bf9-718e-44b3-88ee-c27397e79504" />
+<img width="774" height="673" alt="Screenshot 2026-06-29 at 1 14 23 PM" src="https://github.com/user-attachments/assets/e21b72e4-2501-46e1-b513-56665fee6939" />
 
 5. Chat with the server:
 
 You can try the following examples:
 
 ```text
-List demos
-What prerequisites for demo Local MCP Server Client Orchestrator
+List all demos
+List prerequisites for MCP Server Client Orchestrator on local environment
+Details of HR demo
+Details of demo: HR environment: openshift
 What prerequisites for demo 3
-Details of Local HR MCP Server Demo
-Install demo 3
-Install Local Weather MCP Server Demo
-Run demo 1 and 3 and 5
-How many of the demos are local and how many are on openshift?
-Health check demo number 3
-
+Install Weather Demo on /tmp/demos/
+Run Weather demo on /tmp/demos/
+Can you list openshift demos?
 ```
 
-<img width="777" height="674" alt="Screenshot 2026-06-26 at 2 15 46 PM" src="https://github.com/user-attachments/assets/fe614e7c-bffd-4c7f-a92d-2141dbbb9792" />
-
+<img width="1426" height="882" alt="Screenshot 2026-06-29 at 1 18 34 PM" src="https://github.com/user-attachments/assets/4f32f59e-385c-4d01-9f89-3bb97db36bf2" />
 
 ---
 
 ## 💡 Notes on Tools
 
-* **Flexible Lookups:** Every tool takes a `key` parameter. The LLM can automatically look up your demos using either the string **Name** (e.g., `Local HR MCP Server Demo`) or the numeric **ID** (e.g., `3`).
+* **Flexible Lookups:** Every tool takes a `key` parameter. The LLM can automatically look up your demos using either the string **Name** (e.g., `Local HR MCP Server Demo`) or the numeric **ID** (e.g., `3`) or even by **keywords** (e.g.,`HR`, `Weather`).
+
 * **Workspaces:** If you don't provide a custom workspace path to the install, run, or health check tools, they will automatically default to `/tmp/mcp-workspace`.
-
-
+* **Environments:** If you don't provide the target environment, it will automatically default to `local`.
