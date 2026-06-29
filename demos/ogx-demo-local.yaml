@@ -36,18 +36,18 @@ install:
 
     - type: clone_git
       repo: https://github.com/osa-ora/ogx-local-demo
-      path: "{{WORKSPACE}}/ogx-local-demo"
+      path: "{{workspace}}/ogx-local-demo"
 
 run:
   steps:
 
     - type: run
-      path: "{{WORKSPACE}}/ogx-local-demo"
+      path: "{{workspace}}/ogx-local-demo"
       mode: terminal
       command: "OLLAMA_URL=http://localhost:11434/v1 uv run ogx run starter"
 
     # RAG test application
     - type: run
-      path: "{{WORKSPACE}}/ogx-local-demo"
+      path: "{{workspace}}/ogx-local-demo"
       mode: terminal
       command: "jupyter lab"
