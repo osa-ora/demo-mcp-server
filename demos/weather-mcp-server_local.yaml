@@ -13,7 +13,6 @@ install:
   steps:
 
     - type: check_python
-    - type: check_postgres
 
     - type: clone_git
       repo: https://github.com/osa-ora/hr-mcp-agent-demo
