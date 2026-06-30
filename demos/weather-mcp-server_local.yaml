@@ -15,7 +15,7 @@ install:
     - type: check_python
 
     - type: clone_git
-      repo: https://github.com/osa-ora/hr-mcp-agent-demo
+      repo: https://github.com/osa-ora/weather-mcp-server
       path: "{{workspace}}/weather-mcp-server-demo"
 
     - type: venv
