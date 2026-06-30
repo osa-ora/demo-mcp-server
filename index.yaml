@@ -28,12 +28,14 @@ demos:
 
   - id: 3
     name: Weather MCP Server Demo
-    description: This demo runs a Weather MCP Server.
+    description: This demo runs a Weather MCP Server either local or in OpenShift.
     keywords:
       - Weather
     environments:
       local:
-        file: weather-mcp-server-local.yaml
+        file: weather-mcp-server_local.yaml
+      openshift:
+        file: weather-mcp-server_ocp.yaml
     
   - id: 4
     name: OGX RAG Demo
@@ -43,5 +45,5 @@ demos:
       - RAG
     environments:
       local:
-        file: ogx-demo-local.yaml
+        file: ogx-demo_local.yaml
 
