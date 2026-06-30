@@ -1,6 +1,6 @@
 name: Weather MCP Server Demo
 
-repo: https://github.com/osa-ora/hr-mcp-agent-demo
+repo: https://github.com/osa-ora/weather-mcp-server
 port: 8060
 
 prerequisites:
@@ -36,7 +36,7 @@ run:
     - type: run
       path: "{{workspace}}/weather-mcp-server-demo"
       mode: terminal
-      command: "./.venv/bin/python weather-mcp.py"
+      command: "./.venv/bin/python app.py"
 
     - type: port_check
       host: localhost
