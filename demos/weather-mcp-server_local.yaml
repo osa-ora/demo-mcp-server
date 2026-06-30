@@ -1,0 +1,45 @@
+name: Weather MCP Server Demo
+
+repo: https://github.com/osa-ora/weather-mcp-server
+port: 8060
+
+prerequisites:
+  - python3
+  - pip
+  - git
+
+
+install:
+  steps:
+
+    - type: check_python
+    - type: check_postgres
+
+    - type: clone_git
+      repo: https://github.com/osa-ora/hr-mcp-agent-demo
+      path: "{{workspace}}/weather-mcp-server-demo"
+
+    - type: venv
+      path: "{{workspace}}/weather-mcp-server-demo"
+
+    - type: install
+      path: "{{workspace}}/weather-mcp-server-demo"
+
+
+run:
+  steps:
+
+    - type: env
+      variables:
+        PORT: "{{port}}"
+
+    - type: run
+      path: "{{workspace}}/weather-mcp-server-demo"
+      mode: terminal
+      command: "./.venv/bin/python app.py"
+
+    - type: port_check
+      host: localhost
+      port: "{{port}}"
+      retries: 10
+      delay_seconds: 2
