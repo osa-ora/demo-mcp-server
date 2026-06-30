@@ -1,4 +1,13 @@
-# Demo Installation MCP Server
+# Demo AI Automation
+
+This simple to setup AI install demo, utilizes Ollama (or any MaaS), ChatBox App (or any other Chat App) and Demo MCP Server, it fetches all th demos from this repository: index.yaml, which contains the demos list and reference to the yaml file needed to preprare the demo for every environment (either local or remote one e.g. OpenShift).
+
+
+<img width="1536" height="1024" alt="demo_mcp_components" src="https://github.com/user-attachments/assets/a7ac3ef4-d2c3-4744-a04b-6e49a44ba0e8" />
+
+
+
+# Demo MCP Server
 This MCP Server is dedicated to build my custom demos, either locally or on OpenShift cluster.
 
 The MCP Server expose the following functions:
@@ -10,6 +19,7 @@ The MCP Server expose the following functions:
 - run_demo
 - health_check_demo
 
+It utilzies the mcp_helper as the engine for all these use cases behind the scene.
 
 <img width="2816" height="1536" alt="component_diagram" src="https://github.com/user-attachments/assets/6c40dcbb-6b91-49c4-b7bf-16117251a772" />
 
