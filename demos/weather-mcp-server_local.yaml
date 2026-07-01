@@ -5,12 +5,12 @@ port: 8060
 
 prerequisites:
   steps:
-    - type: python
+    - type: check_python
       min_version: "3.10"
 
-    - type: pip
+    - type: check_pip
 
-    - type: git
+    - type: check_git
 
 install:
   steps:
