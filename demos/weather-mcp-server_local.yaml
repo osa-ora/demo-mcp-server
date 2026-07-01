@@ -4,18 +4,18 @@ repo: https://github.com/osa-ora/weather-mcp-server
 port: 8060
 
 prerequisites:
-  - python3
-  - pip
-  - git
+  steps:
+    - type: python
+      min_version: "3.10"
 
+    - type: pip
+
+    - type: git
 
 install:
   steps:
-
-    - type: check_python
-
     - type: clone_git
-      repo: https://github.com/osa-ora/weather-mcp-server
+      repo: "{{repo}}"
       path: "{{workspace}}/weather-mcp-server-demo"
 
     - type: venv
@@ -24,10 +24,8 @@ install:
     - type: install
       path: "{{workspace}}/weather-mcp-server-demo"
 
-
 run:
   steps:
-
     - type: env
       variables:
         PORT: "{{port}}"
@@ -37,8 +35,9 @@ run:
       mode: terminal
       command: "./.venv/bin/python app.py"
 
-    - type: port_check
-      host: localhost
-      port: "{{port}}"
+health:
+  steps:
+    - type: mcp
+      endpoint: "http://localhost:{{port}}/mcp"
       retries: 10
       delay_seconds: 2
