@@ -15,7 +15,7 @@ prerequisites:
 install:
   steps:
     - type: clone_git
-      repo: "{{repo}}"
+      repo: https://github.com/osa-ora/weather-mcp-server
       path: "{{workspace}}/weather-mcp-server-demo"
 
     - type: venv
