@@ -9,10 +9,10 @@ demos:
 
     environments:
       local:
-        file: mcp-client-orchestrator_local.yaml
+        file: https://raw.githubusercontent.com/osa-ora/demo-mcp-server/refs/heads/main/demos/mcp-client-orchestrator_local.yaml
 
       openshift:
-        file: mcp-client-orchestrator_ocp.yaml
+        file: https://raw.githubusercontent.com/osa-ora/demo-mcp-server/refs/heads/main/demos/mcp-client-orchestrator_ocp.yaml
 
   - id: 2
     name: HR MCP Server Demo
@@ -21,10 +21,10 @@ demos:
       - HR
     environments:
       local:
-        file: hr_mcp_server_local.yaml
+        file: https://raw.githubusercontent.com/osa-ora/demo-mcp-server/refs/heads/main/demos/hr_mcp_server_local.yaml
 
       openshift:
-        file: hr_mcp_server_ocp.yaml
+        file: https://raw.githubusercontent.com/osa-ora/demo-mcp-server/refs/heads/main/demos/hr_mcp_server_ocp.yaml
 
   - id: 3
     name: Weather MCP Server Demo
@@ -33,9 +33,9 @@ demos:
       - Weather
     environments:
       local:
-        file: weather-mcp-server_local.yaml
+        file: https://raw.githubusercontent.com/osa-ora/demo-mcp-server/refs/heads/main/demos/weather-mcp-server_local.yaml
       openshift:
-        file: weather-mcp-server_ocp.yaml
+        file: https://raw.githubusercontent.com/osa-ora/demo-mcp-server/refs/heads/main/demos/weather-mcp-server_ocp.yaml
     
   - id: 4
     name: OGX RAG Demo
@@ -45,5 +45,5 @@ demos:
       - RAG
     environments:
       local:
-        file: ogx-demo_local.yaml
+        file: https://raw.githubusercontent.com/osa-ora/demo-mcp-server/refs/heads/main/demos/ogx-demo_local.yaml
 
