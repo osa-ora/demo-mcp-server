@@ -37,7 +37,7 @@ run:
 
 health:
   steps:
-    - type: mcp
+    - type: mcp_check
       endpoint: "http://localhost:{{port}}/mcp"
       retries: 10
       delay_seconds: 2
