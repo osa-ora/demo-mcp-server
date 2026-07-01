@@ -32,7 +32,7 @@ install:
         | psql hrdb
 
     - type: clone_git
-      repo: "{{repo}}"
+      repo: https://github.com/osa-ora/hr-mcp-agent-demo
       path: "{{workspace}}/hr-mcp-agent-demo"
 
     - type: venv
