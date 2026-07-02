@@ -24,11 +24,11 @@ install:
       command: new-project weather-mcp
       
     - type: oc_command
+      command: apply -f https://raw.githubusercontent.com/osa-ora/weather-mcp-server/refs/heads/main/config/configmap.yaml -n weather-mcp
+
+    - type: oc_command
       command: new-app python:3.12-minimal-ubi10~https://github.com/osa-ora/weather-mcp-server --name=weather-mcp-server -n weather-mcp
       
-    - type: oc_command
-      command: apply -f https://raw.githubusercontent.com/osa-ora/weather-mcp-server/refs/heads/main/config/configmap.yaml -n weather-mcp
-    
     - type: oc_command
       command: set env deployment/weather-mcp-server --from=configmap/weather-mcp-config -n weather-mcp
       
