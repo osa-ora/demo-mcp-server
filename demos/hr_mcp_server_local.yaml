@@ -65,7 +65,12 @@ health:
 
 cleanup:
   steps:
-
+    - type: no_running_check
+      host: localhost
+      port: "{{port}}"
+      retries: 10
+      delay_seconds: 2
+      
     - type: shell_command
       command: 'psql postgres -c "DROP DATABASE hrdb;"'
       ignore_error: true
