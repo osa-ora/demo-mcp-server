@@ -59,15 +59,12 @@ health:
       host: localhost
       port: "{{port}}"
       retries: 10
-      delay_seconds: 2
+      delay_seconds: 3
       
 cleanup:
   steps:
-    - type: no_running_check
-      host: localhost
+    - type: kill_port
       port: "{{port}}"
-      retries: 10
-      delay_seconds: 2
 
     - type: delete_directory
       path: "{{workspace}}/ogx-local-demo"
