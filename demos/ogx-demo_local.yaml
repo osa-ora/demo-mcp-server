@@ -55,6 +55,11 @@ run:
 
 cleanup:
   steps:
+    - type: no_running_check
+      host: localhost
+      port: "{{port}}"
+      retries: 10
+      delay_seconds: 2
 
     - type: delete_directory
       path: "{{workspace}}/ogx-local-demo"
