@@ -52,7 +52,15 @@ run:
       path: "{{workspace}}/ogx-local-demo"
       mode: terminal
       command: "jupyter lab ogx-basic-demos/simple-rag-ogx-openai.ipynb"
+health:
+  steps:
 
+    - type: check_port
+      host: localhost
+      port: "{{port}}"
+      retries: 10
+      delay_seconds: 2
+      
 cleanup:
   steps:
     - type: no_running_check
