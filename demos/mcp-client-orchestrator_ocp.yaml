@@ -7,7 +7,7 @@ prerequisites:
   steps:
     - type: check_oc
 
-    - type: check_oc_login
+    - type: check_oc_logged_in
 
 install:
   steps:
