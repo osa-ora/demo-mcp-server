@@ -9,7 +9,7 @@ prerequisites:
 
     - type: check_curl
 
-    - type: check_oc_login
+    - type: check_oc_logged_in
 
 install:
   steps:
