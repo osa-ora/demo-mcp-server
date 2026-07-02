@@ -55,7 +55,7 @@ run:
 health:
   steps:
 
-    - type: check_port
+    - type: port_check
       host: localhost
       port: "{{port}}"
       retries: 10
