@@ -4,10 +4,12 @@ repo: https://github.com/osa-ora/hr-mcp-agent-demo
 port: 80
 
 prerequisites:
-  - oc command
-  - curl command
-  - oc login
+  steps:
+    - type: check_oc
 
+    - type: check_curl
+
+    - type: check_oc_login
 
 install:
   steps:
@@ -67,7 +69,6 @@ install:
 
 health:
   steps:
-
     - type: oc_command
       command: wait --for=condition=available deployment/hr-mcp-server -n hr-mcp --timeout=180s
 
@@ -75,9 +76,13 @@ health:
       command: get route hr-mcp-server -n hr-mcp -o jsonpath='{.spec.host}'
       register: MCP_ROUTE
 
-    - type: port_check
-      host: "{{MCP_ROUTE}}"
-      port: "{{port}}"
+    - type: mcp_check
+      endpoint: "http://{{MCP_ROUTE}}/mcp"
       retries: 10
       delay_seconds: 2
-  
+
+cleanup:
+  steps:
+    - type: oc_command
+      command: delete project hr-mcp
+      ignore_error: true
