@@ -44,11 +44,8 @@ health:
 
 cleanup:
   steps:
-    - type: no_running_check
-      host: localhost
+    - type: kill_port
       port: "{{port}}"
-      retries: 10
-      delay_seconds: 2
       
     - type: delete_directory
       path: "{{workspace}}/weather-mcp-server-demo"
