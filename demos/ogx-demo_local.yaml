@@ -52,3 +52,9 @@ run:
       path: "{{workspace}}/ogx-local-demo"
       mode: terminal
       command: "jupyter lab ogx-basic-demos/simple-rag-ogx-openai.ipynb"
+
+cleanup:
+  steps:
+
+    - type: delete_directory
+      path: "{{workspace}}/ogx-local-demo"
