@@ -33,7 +33,7 @@ install:
         --with "sentence-transformers>=2.6.0"
 
     - type: clone_git
-      repo: "{{repo}}"
+      repo: https://github.com/osa-ora/ogx-local-demo
       path: "{{workspace}}/ogx-local-demo"
 
 run:
