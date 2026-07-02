@@ -11,9 +11,12 @@ prerequisites:
 
 install:
   steps:
+     - type: oc_command
+      command: delete project mcp-client
+      ignore_error: true
+      
     - type: oc_command
       command: new-project mcp-client
-      ignore_error: true
 
     - type: oc_command
       command: apply -f https://raw.githubusercontent.com/osa-ora/ocp-ai-mcp-client-demo/main/ocp/configmap.yaml -n mcp-client
