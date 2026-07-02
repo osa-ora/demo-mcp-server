@@ -1,7 +1,7 @@
 name: OGX Local Demo
 
 repo: https://github.com/osa-ora/ogx-local-demo
-port: 8000
+port: 8321
 
 prerequisites:
   steps:
