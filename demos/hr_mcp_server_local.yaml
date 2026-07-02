@@ -62,3 +62,14 @@ health:
       endpoint: "http://localhost:{{port}}/mcp"
       retries: 10
       delay_seconds: 2
+
+cleanup:
+  steps:
+
+    - type: shell_command
+      command: 'psql postgres -c "DROP DATABASE hrdb;"'
+      ignore_error: true
+
+    - type: delete_directory
+      path: "{{workspace}}/hr-mcp-agent-demo"
+
