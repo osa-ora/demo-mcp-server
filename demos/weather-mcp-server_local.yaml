@@ -41,3 +41,9 @@ health:
       endpoint: "http://localhost:{{port}}/mcp"
       retries: 10
       delay_seconds: 2
+
+cleanup:
+  steps:
+
+    - type: delete_directory
+      path: "{{workspace}}/weather-mcp-server-demo"
